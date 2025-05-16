@@ -1,8 +1,9 @@
+"use client";
+
 import { useEffect, useState } from "react";
 // import { useScrollFade } from "../../../hooks/useScrollFade";
-import { Button } from "../../../GlobalComponents/Button";
+import Button from "../../../GlobalComponents/Button";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react";
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +39,7 @@ export const Header = () => {
           key={item.label}
           texto={item.label}
           href={item.href}
-          className={`text-lg active:scale-95 ${className}`}
+          className={className}
         />
       ))}
     </>
@@ -47,11 +48,7 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`w-full sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#F8F3E9]/95 shadow-md backdrop-blur-sm"
-            : "bg-transparent"
-        }`}
+        className={`w-full p-2 top-0 z-50 transition-all duration-300  bg-[#F8F3E9]/95 shadow-md backdrop-blur-sm`}
       >
         <nav className="w-full p-4 md:p-6">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto px-4 md:px-6 h-16">
@@ -65,19 +62,21 @@ export const Header = () => {
               />
             </div>
             <Button
-              texto="SOBRE NÓS"
-              className="md:hidden border-galeto-primary text-galeto-primary"
+              texto="MENU"
+              className={`md:hidden text-lg active:scale-95`}
               onClick={() => setMenuAberto(!menuAberto)}
             />
             <div className="hidden md:flex w-full items-center gap-6">
               <div className="flex-1 flex justify-center gap-6">
-                {renderMenuButtons()}
+                <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">SOBRE NÓS</button>
+                <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">CONTATO</button>
+                <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">SERVIÇOS</button>
               </div>
-              <Button
-                texto="RESERVE JÁ"
-                onClick={handleNavigate}
-                className="text-base font-medium active:scale-95 bg-galeto-primary text-white hover:bg-galeto-primary/90 px-6 py-2 rounded-full transition-all"
-              />
+              <button 
+              onClick={handleNavigate}
+              className="text-base font-medium active:scale-95 bg-[#8B4513] text-white hover:bg-[#8B4513]/90 px-6 py-2 rounded-full transition-all">
+                RESERVE JÁ
+              </button>
             </div>
           </div>
 
@@ -86,18 +85,7 @@ export const Header = () => {
               menuAberto ? "max-h-[300px] py-4" : "max-h-0 py-0"
             }`}
           >
-            <div className="px-4">
-              <div className="w-full h-[1px] bg-galeto-border mb-4" />
-              <div className="flex flex-col items-center gap-4">
-                {renderMenuButtons("w-full justify-start")}
-                <Button
-                  texto="RESERVE JÁ"
-                  onClick={handleNavigate}
-                  className="w-full text-base font-medium active:scale-95 bg-galeto-primary text-white hover:bg-galeto-primary/90 rounded-full transition-all"
-                />
-                RESERVE JÁ
-              </div>
-            </div>
+           
           </div>
         </nav>
       </header>

@@ -1,4 +1,3 @@
-import { useScrollFade } from "../hooks/useScrollFade";
 import React from "react";
 
 interface ButtonProps {
@@ -9,7 +8,7 @@ interface ButtonProps {
   tipo?: "BotaoNormal" | "Reservar" | "Cardapio";
 }
 
-export const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   texto,
   href,
   onClick,
@@ -22,13 +21,13 @@ export const Button: React.FC<ButtonProps> = ({
       "w-[150px] h-[50px] flex shadow-xl/20 bg-[#A47103] items-center justify-center text-center tracking-[2px] transition-colors transition-transform duration-500 ease-in-out transform hover:bg-[#855B00] hover:scale-105 hover:shadow-md hover:shadow-xl/30",
 
     Reservar:
-      "w-[200px] h-[50px] font-semibold flex shadow-xl/20 bg-[#A47103] items-center justify-center text-center tracking-[2px] transition-colors transition-transform duration-500 ease-in-out transform hover:bg-[#855B00] hover:scale-105 hover:shadow-lg hover:shadow-xl/30",
+      "text-base font-medium active:scale-95 bg-[#8B4513] text-white hover:bg-[#8B4513]/90 px-6 py-2 rounded-full transition-all",
 
     Cardapio:
       "w-[250px] h-[75px] font-semibold flex shadow-xl/20 bg-[#A47103] items-center justify-center text-center tracking-[2px] transition-colors transition-transform duration-500 ease-in-out transform hover:bg-[#855B00] hover:scale-110 hover:shadow-xl hover:shadow-xl/30",
   };
 
-  const finalStyle = `${baseStyle} ${tipoStyle[tipo]} ${className}`;
+  const finalStyle = `text-base px-6 py- font-medium hover:text-[#8B4513] hover:bg-[#855B00] active:scale-95 ${className}`;
   // const dynamicStyle = {
   //   opacity: scrollStyle.opacity,
   //   transition: "opacity 0.3s ease-in-out, padding 0.3s ease-in-out",
@@ -47,3 +46,5 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
+
+export default Button;
