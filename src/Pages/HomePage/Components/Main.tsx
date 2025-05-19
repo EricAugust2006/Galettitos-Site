@@ -11,29 +11,10 @@ export const Main = () => {
   return (
     <>
       <main>
-        <section className="flex flex-col items-center justify-center text-center py-16 px-4 md:px-0 max-w-screen-lg mx-auto">
-          <h1
-            className="text-white text-4xl md:text-6xl font-bold font-crimson"
-            style={{
-              opacity: scrollStyle.opacity,
-              paddingTop: `${scrollStyle.padding}px`,
-            }}
-          >
-            O MELHOR FRANGO DA CIDADE
-          </h1>
-          <p
-            className="text-white text-lg md:text-2xl mt-4 font-crimson"
-            style={{ opacity: scrollStyle.opacity }}
-          >
-            Suculento, Crocante e feito com Carinho
-          </p>
-          <Button
-            tipo="Cardapio"
-            texto="VER CARDÁPIO"
-            href="#pedido"
-            className="mt-6 text-lg active:scale-95"
-          />
-        </section>
+        <div className="flex n">
+          <section></section>
+          <section></section>
+        </div>
         <section className="bg-[#360000] py-16 px-4 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <div className="bg-[#2a0000] p-6 rounded-lg flex flex-col items-center">

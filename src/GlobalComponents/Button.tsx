@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       "w-[250px] h-[75px] font-semibold flex shadow-xl/20 bg-[#A47103] items-center justify-center text-center tracking-[2px] transition-colors transition-transform duration-500 ease-in-out transform hover:bg-[#855B00] hover:scale-110 hover:shadow-xl hover:shadow-xl/30",
   };
 
-  const finalStyle = `text-base px-6 py- font-medium hover:text-[#8B4513] hover:bg-[#855B00] active:scale-95 ${className}`;
+  const finalStyle = ` active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-[#DAA520]/90 px-8 py-6 rounded-full transition-all group overflow-hidden relative ${className}`;
   // const dynamicStyle = {
   //   opacity: scrollStyle.opacity,
   //   transition: "opacity 0.3s ease-in-out, padding 0.3s ease-in-out",
@@ -35,14 +35,14 @@ const Button: React.FC<ButtonProps> = ({
   if (href) {
     return (
       <a href={href} className={finalStyle}>
-        <p className="text-[18px] font-crimson text-center">{texto}</p>
+        <p className="text-base font-medium">{texto}</p>
       </a>
     );
   }
 
   return (
     <button onClick={onClick} className={finalStyle}>
-      <p className="text-[16px] font-crimson text-center">{texto}</p>
+      <p className="text-base font-medium">{texto}</p>
     </button>
   );
 };

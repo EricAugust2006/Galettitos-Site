@@ -26,24 +26,6 @@ export const Header = () => {
     navigate("/reservas");
   };
 
-  const menuItems = [
-    { label: "SOBRE NÓS", href: "#home" },
-    { label: "SERVIÇOS", href: "#home" },
-    { label: "CONTATO", href: "#home" },
-  ];
-
-  const renderMenuButtons = (className = "") => (
-    <>
-      {menuItems.map((item) => (
-        <Button
-          key={item.label}
-          texto={item.label}
-          href={item.href}
-          className={className}
-        />
-      ))}
-    </>
-  );
 
   return (
     <>
