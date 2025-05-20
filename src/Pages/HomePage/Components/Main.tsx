@@ -6,7 +6,9 @@ export const Main = () => {
   const scrollStyle = useScrollFade(800);
 
   const num = import.meta.env.NUMBER;
-  const url = `https://wa.me/${encodeURIComponent(num)}?text=Olá%2C%20gostaria%20de%20mais%20informações%21`;
+  const url = `https://wa.me/${encodeURIComponent(
+    num
+  )}?text=Olá%2C%20gostaria%20de%20mais%20informações%21`;
 
   return (
     <>

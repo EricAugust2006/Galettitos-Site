@@ -16,7 +16,7 @@ export const HeroSection = () => {
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
@@ -41,11 +41,11 @@ export const HeroSection = () => {
   }, []);
 
   const images = [
-
     "https://picsum.photos/200/200",
-    "https://picsum.photos/200/200", 
+    "https://picsum.photos/200/200",
     "https://picsum.photos/200/200",
   ];
+
 
   const imageVariantes = {
     enter: (direction: number) => ({
@@ -72,17 +72,20 @@ export const HeroSection = () => {
   };
 
   return (
-    <section className="relative overflow-hidden" ref={containerRef}>
-      <div className="absolute inset-0 bg-[url('/public/BackgroundComponent.svg?height=1200&width=1920')] bg-cover bg-fixed bg-no-repeat bg-center">
+    <section
+      className="bg-[#5E2612]/50 relative overflow-hidden"
+      ref={containerRef}
+    >
+      <div className="absolute inset-0">
         <motion.div
-          className="absolute py-20 inset-0 bg-gradient-to-r from-[#5E2612]/80 to-[#5E2612]/60"
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-[#5E2612] to-[#5E2612]/60"
           style={{ y, opacity }}
         />
       </div>
 
       {/* conteudo */}
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between min-h-[90vh] max-w-7xl mx-auto px-6 py-20">
-        <div className="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0">
+        <div className="p-6 w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -102,19 +105,21 @@ export const HeroSection = () => {
               }}
             >
               O MELHOR{" "}
-              <span className="text-[#DAA520] relative">
+              <span className="text-[#DAA520] relative inline-block">
                 GALETO
                 <motion.span
-                  className="absolute -bottom-2 left-0 w-full h-1 bg-galeto-secondary"
-                  animate={{ scaleX: [0, 1, 0] }}
+                  className="absolute left-1/2 -translate-x-1/2 -bottom-.5 h-[2px] bg-[#DAA520]"
+                  animate={{ width: ["0%", "100%", "0%"] }}
                   transition={{
                     duration: 3,
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "reverse",
                   }}
+                  style={{
+                    display: "block",
+                  }}
                 />
-              </span>
-              {""}
+              </span>{" "}
               DA CIDADE
             </motion.h1>
             <p
@@ -128,17 +133,17 @@ export const HeroSection = () => {
               toda a diferença. Uma tradição que conquista pelo sabor.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <button className="text-base font-medium active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-[#DAA520]/90 px-8 py-6 rounded-full transition-all group overflow-hidden relative">
+              <button className="text-base font-medium active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-white/90 hover:text-black px-4 py-2 rounded-full transition-all group overflow-hidden relative">
                 VER CARDAPIO
               </button>
-              <button className="text-base font-medium active:scale-95 border-white text-white bg-#DAA520 hover:bg-white hover:text-black  0 px-8 py-6 rounded-full transition-all group overflow-hidden relative">
+              <button className="text-base font-medium active:scale-95 border-white text-white bg-[#DAA520] hover:bg-white/90 hover:text-black px-6 py-4 rounded-full transition-all group overflow-hidden relative">
                 FAZER RESERVAS
               </button>
             </div>
           </motion.div>
         </div>
 
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end py-6">
           <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
             <motion.div
               className="absolute inset-0 rounded-full bg-[#DAA520]/20"
@@ -206,13 +211,13 @@ export const HeroSection = () => {
 
       {/* elemento decorativo*/}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F8F3E9] to-transparent" />
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 mt-[10px]">
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
         >
           <a href="#info" className="flex flex-col items-center text-white">
-            <span className="text-sm mb-2">Descubra mais</span>
+            <span className="text-sm ">Descubra mais</span>
             <svg
               width={24}
               height={24}
