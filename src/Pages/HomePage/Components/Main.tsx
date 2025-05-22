@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "../../../GlobalComponents/Button.tsx";
 import { useScrollFade } from "../../../hooks/useScrollFade.tsx";
 import { MapPin, Truck, Phone } from "lucide-react";
