@@ -1,15 +1,11 @@
 import CustomCursor from "../../GlobalComponents/MouseCustom";
-import { Footer } from "../HomePage/Components/Footer";
-import { Header } from "../HomePage/Components/Header";
+import { Header } from "./Components/Header";
+import  ReservePage from "./Components/ReservePage";
 
 const ReservarPage = () => {
   return (
     <>
-      <CustomCursor />
-
-      <Header />
-
-      <Footer />
+      <ReservePage/>
     </>
   );
 };

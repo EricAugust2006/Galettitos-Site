@@ -1,12 +1,8 @@
 "use client";
 
-import Button from "../../../GlobalComponents/Button.tsx";
-import { useScrollFade } from "../../../hooks/useScrollFade.tsx";
 import { MapPin, Truck, Phone } from "lucide-react";
 
 export const Main = () => {
-  const scrollStyle = useScrollFade(800);
-
   const num = import.meta.env.NUMBER;
   const url = `https://wa.me/${encodeURIComponent(
     num

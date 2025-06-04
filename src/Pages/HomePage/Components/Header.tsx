@@ -52,6 +52,7 @@ export const Header = () => {
     <>
       <header
         className={`w-full p-2 top-0 z-50 transition-all duration-300  bg-[#F8F3E9]/95 shadow-md backdrop-blur-sm`}
+        id="header"
       >
         <nav className="w-full p-4 md:p-6">
           <div className="flex items-center justify-between max-w-screen-xl mx-auto px-4 md:px-6 h-16">
@@ -75,16 +76,17 @@ export const Header = () => {
               <div className="flex-1 flex justify-center gap-6">
                 {LineSeparationHeader()}
                 <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">
-                  SOBRE NÓS
+                  <a href="#about">SOBRE NÓS</a>
                 </button>
                 {LineSeparationHeader()}
                 <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">
-                  CONTATO
+                  <a href="#Menu">MENU</a>
                 </button>
                 {LineSeparationHeader()}
                 <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-colors h-10 px-4 py-2 text-base font-medium hover:text-[#8B4513] active:scale-95 hover:bg-[#cb8743] text-base font-medium hover:[#8B4513] active:scale-95">
-                  SERVIÇOS
+                  <a href="#contact">CONTATO</a>
                 </button>
+
                 {LineSeparationHeader()}
               </div>
               <button

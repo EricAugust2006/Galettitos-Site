@@ -2,11 +2,38 @@
 
 import { Mail, MapPin, Phone } from "lucide-react";
 import Formulario from "../../../GlobalComponents/form";
+import { useEffect, useState } from "react";
 
 export const Footer = () => {
+  const handleScroll = (id: any) => {
+    window.scrollTo({
+      top: document.getElementById(id)
+        ? document.getElementById(id)!.offsetTop
+        : 0,
+      behavior: "smooth",
+    });
+  };
+
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Handles a click event on an element and scrolls to the element with the
+   * same id as the clicked element.
+   * @param {React.MouseEvent} e - The click event.
+   */
+  /*******  dcda0283-74de-4fc2-94fb-a20086697c09  *******/
+  const handleClickId = (e: any) => {
+    const id = e.target.id;
+    if (id) {
+      handleScroll(id);
+    }
+  };
+
   return (
     <>
-      <footer className="bg-[#2C0000] text-white pt-16 pb-10">
+      <footer
+        className="bg-gradient-to-b from-[#5E2612]/20 to-[#5E2612]/30 text-[#3E2723] pt-20 pb-10 relative overflow-hidden"
+        id="contact"
+      >
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-16">
           <div className="flex flex-col">
             <img
@@ -51,22 +78,22 @@ export const Footer = () => {
             </h3>
             <ul className="space-y-5 text-base">
               <li>
-                <a href="#" className="hover:text-[#FFCC00] transition-colors">
-                  Início
-                </a>
+                <button className="hover:text-[#FFCC00] transition-colors">
+                  <a href="#header">Início</a>
+                </button>
               </li>
               <li>
-                <a href="#" className="hover:text-[#FFCC00] transition-colors">
+                <a href="#info" className="hover:text-[#FFCC00] transition-colors">
                   Sobre
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#FFCC00] transition-colors">
-                  Produtos
+                <a href="#Menu" className="hover:text-[#FFCC00] transition-colors">
+                  Menu
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#FFCC00] transition-colors">
+                <a href="#contact" className="hover:text-[#FFCC00] transition-colors">
                   Contato
                 </a>
               </li>
@@ -83,7 +110,7 @@ export const Footer = () => {
         </div>
 
         <div className="text-center mt-8">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-900">
             &copy; {new Date().getFullYear()} Galettitos. Todos os direitos
             reservados.
           </p>

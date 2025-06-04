@@ -8,8 +8,14 @@ import {
 } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import Button from "../../../GlobalComponents/Button";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = async () => {
+    navigate("/reservas");
+  }
   const [scrollOpacity, setScrollOpacity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const containerRef = useRef(null);
@@ -135,10 +141,10 @@ export const HeroSection = () => {
               toda a diferença. Uma tradição que conquista pelo sabor.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <button className="text-base font-medium active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-white/90 hover:text-black px-4 py-2 rounded-full transition-all group overflow-hidden relative">
+              <a href="#Menu" className="text-base flex justify-center items-center font-medium active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-white/90 hover:text-black px-4 py-2 text-center rounded-full transition-all group overflow-hidden relative">
                 VER CARDAPIO
-              </button>
-              <button className="text-base font-medium active:scale-95 border-white text-white bg-[#DAA520] hover:bg-white/90 hover:text-black px-6 py-4 rounded-full transition-all group overflow-hidden relative">
+              </a>
+              <button onClick={handleNavigate} className="text-base font-medium active:scale-95 border-white text-white bg-[#DAA520] hover:bg-white/90 hover:text-black px-6 py-4 rounded-full transition-all group overflow-hidden relative">
                 FAZER RESERVAS
               </button>
             </div>

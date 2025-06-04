@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');@import "tailwindcss";
 
+* {
+  scroll-behavior: smooth;
+}
+
 @theme {
   --font-Inter: 'Inter', sans-serif;
   --font-Merrisans: "Merriweather", "serif";
@@ -16,7 +20,6 @@
 * {
   box-sizing: border-box;
   font-family: var(--font-Inter);
-  cursor: none;
 }
 
 @tailwind base;
@@ -111,5 +114,42 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+.navigation {
+  @apply transition duration-300 ease-in-out;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+.voltar-icon-container {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.loading-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-icon svg {
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

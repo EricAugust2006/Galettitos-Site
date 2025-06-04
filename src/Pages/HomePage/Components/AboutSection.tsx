@@ -92,7 +92,7 @@ export const AboutSection = () => {
                 <div className="text-4xl font-bold text-[#DAA520]">100%</div>
                 <div className="text-[#3E2723]">Satisfação</div>
                 <motion.div
-                  className="absolute inset-0 border-2 border-galeto-secondary/20 rounded-lg -z-10"
+                  className="absolute inset-0 border-2 border-[#DAA520]/20 rounded-lg -z-10"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 />
@@ -102,7 +102,7 @@ export const AboutSection = () => {
                 <div className="text-4xl font-bold text-[#DAA520]">1000+</div>
                 <div className="text-[#3E2723]">Clientes felizes</div>
                 <motion.div
-                  className="absolute inset-0 border-2 border-galeto-secondary/20 rounded-lg -z-10"
+                  className="absolute inset-0 border-2 border-[#DAA520]/20 rounded-lg -z-10"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 />
@@ -128,15 +128,165 @@ export const AboutSection = () => {
             </motion.div>
 
             <motion.div
-              className="absolute -bottom-6 left-6 w-32 bg-[#DAA520] rounded-full flex items-center justify-center text-[#5E2612] font-bold text-xl p-4 text-center shadow-lg"
-              animate={{ rotate: [0, 5, 0, - 5, 0] }}
-              transition={{ transition: 6, repeat: Number.POSITIVE_INFINITY}}
+              className="absolute px-[12px] -bottom-6 left-6 bg-[#DAA520] rounded-full flex items-center justify-center text-[#5E2612] font-bold text-xl p-4 text-center shadow-lg"
+              animate={{ rotate: [0, 5, 0, -5, 0] }}
+              transition={{ transition: 10, repeat: Number.POSITIVE_INFINITY }}
             >
               TEMPERO EXCLUVISO
             </motion.div>
+
+            <motion.div
+              className="absolute -top-4 -right-4 w-24 h-24 bg-[#8B4513] rounded-full flex items-center justify-center text-white font-bold text-lg p-3 text-center shadow-lg"
+              animate={{ rotate: [0, -5, 0, 5, 0] }}
+              transition={{
+                duration: 5,
+                repeat: Number.POSITIVE_INFINITY,
+                delay: 1,
+              }}
+            >
+              Desde 2020
+            </motion.div>
           </motion.div>
         </div>
+
+        <motion.div
+          className="mt-24 bg-[#FFF9F0] rounded-2xl p-10 shadow-md border border-[#E8D8C0] relative overflow-hidden"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-[#8B4513]/5 to-transparent" />
+
+          <h3 className="text-3xl font-bold text-[#8B4513] mb-8 text-center font-serif relative z-10">
+            NOSSO <span className="text-[#DAA520]">DIFERENCIAL</span> 
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 relative z-10">
+            {[
+              {
+                icon: (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-[#8B4513]"
+                  >
+                    <path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
+                  </svg>
+                ),
+                title: "Tempero caseiro exclusivo",
+                description: "Receita secreta passada de geração em geração",
+              },
+              {
+                icon: (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-[#8B4513]"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                  </svg>
+                ),
+                title: "Frango assado suculento",
+                description: "Preparo perfeito que mantém a suculência",
+              },
+              {
+                icon: (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-[#8B4513]"
+                  >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                ),
+                title: "Atendimento acolhedor",
+                description:
+                  "Equipe treinada para proporcionar a melhor experiência",
+              },
+              {
+                icon: (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-[#8B4513]"
+                  >
+                    <rect x="1" y="3" width="15" height="13"></rect>
+                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                  </svg>
+                ),
+                title: "Entrega rápida",
+                description: "Seu pedido chega quentinho e no prazo",
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="text-center group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+                whileHover={{ y: -5 }}
+              >
+                <motion.div
+                  className="w-16 h-16 bg-[#8B4513]/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#8B4513]/20 transition-colors duration-300 relative overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {item.icon}
+                  <motion.div
+                    className="absolute inset-0 bg-[#8B4513]/10 rounded-full"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{
+                      duration: 3,
+                      repeat: Number.POSITIVE_INFINITY,
+                      repeatType: "reverse",
+                      delay: index * 0.5,
+                    }}
+                  />
+                </motion.div>
+                <h4 className="font-bold text-[#8B4513] mb-2 group-hover:text-[#DAA520] transition-colors duration-300">
+                  {item.title}
+                </h4>
+                <p className="text-[#3E2723]">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
-  );
-};
+  )
+}
