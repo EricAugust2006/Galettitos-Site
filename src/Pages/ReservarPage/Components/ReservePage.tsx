@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useAnimation, scale } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   Check,
   ShoppingCart,
@@ -37,6 +37,9 @@ interface CustomerInfo {
 }
 
 export default function ReservePage() {
+  // let [numero, setNumero] = useState(0);
+  // const controls = useAnimation();
+
   const [isHovered, setIsHovered] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [orderItems, setOrderItems] = useState<OrderList[]>([]);
@@ -49,6 +52,15 @@ export default function ReservePage() {
     paymentMethod: "",
     observations: "",
   });
+
+  // useEffect(() => {
+  //   controls.start({
+  //     scale: [1, 1.15, 1],
+  //     transition: {
+  //       duration: 0.5,
+  //     },
+  //   });
+  // }, [numero]);
 
   const menuItems: OrderList[] = [
     {
@@ -160,7 +172,10 @@ export default function ReservePage() {
     const item = orderItems.find((orderItem) => orderItem.id === itemId);
     return item ? item.quantity : 0;
   };
-
+  const getSumPrice = (itemId: number) => {
+    const item = orderItems.find((item) => item.id === itemId);
+    return item ? item.quantity * item.price : 0;
+  };
   const getTotalPrice = () => {
     return orderItems.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -173,13 +188,16 @@ export default function ReservePage() {
   };
 
   const nextStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+    console.log("foi certinho");
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1);
     }
+    console.log(currentStep);
+    //quero ver dps qual numero eu vou estar passando
   };
 
   const prevStep = () => {
-    if (currentStep < 3) {
+    if (currentStep > 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -203,9 +221,6 @@ export default function ReservePage() {
   return (
     <>
       <div className="flex min-h-screen flex-col bg-[#F8F3E9] relative">
-        <GaletosPattern className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none" />
-        <Header />
-
         <main className="flex-1 p-12 bg-gradient-to-b from-[#F8F3E9] to-[#F5DEB3]/30 relative z-10">
           <div className="max-w-7xl mx-auto px-4">
             <div className="mb-12">
@@ -222,7 +237,7 @@ export default function ReservePage() {
                       <motion.div
                         className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
                           currentStep >= step.number
-                            ? "bg-[#F8F3E9] text-[#F5DEB3] border-[#F5DEB3]"
+                            ? "bg-[#DAA520] text-[#F5DEB3] border-[#F5DEB3]"
                             : "bg-[#F5DEB3] text-[#F8F3E9] border-[#F8F3E9]"
                         }`}
                         whileHover={{ scale: 1.05 }}
@@ -305,33 +320,63 @@ export default function ReservePage() {
                                   </span>
                                   <div className="flex flex-center gap-3">
                                     {getItemQuantity(item.id) > 0 ? (
-                                      <div className="flex items-center gap-2">
-                                        <button
-                                          className="w-8 h-8 p-0 bg-[#8B4513] text-[#8B4513] hover:bg-[#8B4513] hover:text-white"
+                                      <div className="flex transition-all duration-300 easy-in-out items-center gap-4">
+                                        <motion.button
+                                          whileHover={{ scale: 1.1 }}
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: 1 }}
+                                          exit={{ opacity: 0 }}
+                                          transition={{
+                                            duration: 0.5,
+                                          }}
                                           onClick={() =>
                                             removeFromOrder(item.id)
                                           }
+                                          className="p-3 md:p-2 bg-[#8B4513] text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
                                         >
                                           {/* //centrailizar */}
-                                          <Minus className="  text-white w-4 h-4" />
-                                        </button>
-                                        <span className="w-8 text-center font-bold text-[#8B4513]">
-                                          {getItemQuantity(item.id)}
-                                        </span>
-                                        <button
-                                          className="w-8 h-8 p-0 bg-[#8B4513] hover:bg-[#8B4513]/90"
-                                          onClick={() => addToOrder(item)}
+                                          <Minus className="text-white w-4 h-4" />
+                                        </motion.button>
+                                        <motion.span
+                                          key={getItemQuantity(item.id)}
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: 1 }}
+                                          exit={{ opacity: 0 }}
+                                          transition={{
+                                            duration: 0.3,
+                                          }}
+                                          className="text-center w-5 font-bold text-[#8B4513]"
                                         >
-                                          <Plus className="w-4 h-4" />
-                                        </button>
+                                          {getItemQuantity(item.id)}
+                                        </motion.span>
+
+                                        <motion.button
+                                          whileHover={{ scale: 1.1 }}
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: 1 }}
+                                          exit={{ opacity: 0 }}
+                                          transition={{
+                                            duration: 0.5,
+                                          }}
+                                          onClick={() => addToOrder(item)}
+                                          className="p-3 md:p-2 bg-[#8B4513] text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
+                                        >
+                                          <Plus className="text-white w-4 h-4" />
+                                        </motion.button>
                                       </div>
                                     ) : (
-                                      <button
-                                        className="bg-[#8B4513] hover:bg-[#8B4513]/90"
+                                      <motion.button
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{
+                                          duration: 0.5,
+                                        }}
+                                        className="bg-[#8B4513]/90 px-4 py-2 rounded-xl hover:bg-[#8B4513]/90 hover:text-white transition-all duration-300 easy-in-out active:scale-95"
                                         onClick={() => addToOrder(item)}
                                       >
                                         Adicionar
-                                      </button>
+                                      </motion.button>
                                     )}
                                   </div>
                                 </div>
@@ -342,6 +387,177 @@ export default function ReservePage() {
                       ))}
                     </div>
                   </div>
+
+                  <div className="lg:col-span-1">
+                    <div className="sticky top-32">
+                      <Card className="bg-[#FFF9F0] border-[#E8D8C0] ">
+                        <CardContent className="p-6">
+                          <h3 className="text-xl font-bold text-[#8B4513] mb-4">
+                            Seu Pedido
+                          </h3>
+                          {orderItems.length === 0 ? (
+                            <p className="text-xl font-bold text-[#8B4513] mb-4">
+                              Nenhum item selecionado
+                            </p>
+                          ) : (
+                            <>
+                              <div className="space-y-3 mb-6">
+                                {orderItems.map((item) => (
+                                  <motion.div
+                                    key={item.id}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                    exit={{ opacity: 0 }}
+                                  >
+                                    <div
+                                      className="relative gap-[4px] flex items-center justify-between"
+                                      key={item.id}
+                                    >
+                                      <div className="">
+                                        <p className="font-medium text-[#3E2723]">
+                                          {item.name}
+                                        </p>
+                                        <p className="  text-sm text-[#A1887F]">
+                                          {item.quantity}x{" "}
+                                          {item.price
+                                            .toFixed(2)
+                                            .replace(".", ",")}
+                                        </p>
+                                      </div>
+                                      <motion.span
+                                        key={getSumPrice(item.id)}
+                                        className="font-bold  text-[#8B4513]"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                      >
+                                        R${""}
+                                        {getSumPrice(item.id)
+                                          .toFixed(2)
+                                          .replace(".", ",")}
+                                      </motion.span>
+
+                                      <motion.div
+                                        className="absolute h-[.5px] -bottom-1 w-full bg-black/50"
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        transition={{ duration: 0.2 }}
+                                      />
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+
+                              <div className="border-t border-[#E8D8C0] pt-4" />
+                              <div className=" flex justify-between items-center mb-4">
+                                <span className="text-lg font-bold text-[#8B4513]">
+                                  Total:{" "}
+                                </span>
+                                <motion.span
+                                  key={getTotalPrice()
+                                    .toFixed(2)
+                                    .replace(".", ",")}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 0.5 }}
+                                  className="text-xl font-bold text-[#8B4513]"
+                                >
+                                  R${" "}
+                                  {getTotalPrice().toFixed(2).replace(".", ",")}
+                                </motion.span>
+                              </div>
+                              <motion.button
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.5 }}
+                                onClick={nextStep}
+                                disabled={orderItems.length === 0}
+                                className="border-b-2 border-l-.5 border-r-.5 w-full bg-[#DAA520] rounded-xl shadow-xl text-[#5E2612] px-4 py-2 hover:bg-[#DAA520]/90 flex justify-between items-center transition-all duration-300 easy-in-out active:scale-95"
+                              >
+                                Continuar
+                                <div className="flex items-center">
+                                  {getTotalItems()}{" "}
+                                  {getTotalItems() === 1 ? "Item" : "Items"}
+                                  <ArrowRight className="w-6 h-6 ml-2" />
+                                </div>
+                              </motion.button>
+                            </>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {currentStep === 2 && (
+                <motion.div
+                  key="step2"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5 }}
+                  className="max-w-4xl mx-auto"
+                >
+                  <Card className="bg-[#FFF9F0] border-[#E8D8C0]">
+                    <CardContent className="p-8">
+                      <h2 className="text-3xl font-bold text-[#8B4513] mb-8 font-serif text-center">
+                        Suas Informações
+                      </h2>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label htmlFor="name" className="text-[#3E2723]">
+                            Nome Completo
+                          </label>
+                          <input
+                            id="name"
+                            placeholder="Digite seu nome completo"
+                            value={customerInfo.name}
+                            onChange={(e) =>
+                              handleCustomerInfoChange("name", e.target.value)
+                            }
+                            type="text"
+                            className="bg-[#F8F3E9] border-[#E8D8C0] focus:border-[#8B4513]"
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <label htmlFor="phone" className="text-galeto-text">
+                            Telefone
+                          </label>
+                          <input
+                            id="phone"
+                            placeholder="(00) 00000-0000"
+                            value={customerInfo.phone}
+                            onChange={(e) =>
+                              handleCustomerInfoChange("phone", e.target.value)
+                            }
+                            className="bg-galeto-bg border-galeto-border focus:border-galeto-primary"
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <label htmlFor="email" className="text-galeto-text">
+                            E-mail
+                          </label>
+                          <input
+                            id="email"
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={customerInfo.email}
+                            onChange={(e) =>
+                              handleCustomerInfoChange("email", e.target.value)
+                            }
+                            className="bg-galeto-bg border-galeto-border focus:border-galeto-primary"
+                          />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               )}
             </AnimatePresence>

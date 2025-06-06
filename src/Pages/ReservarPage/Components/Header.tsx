@@ -18,7 +18,7 @@ export const Header = () => {
 
   return (
     <motion.nav
-      className="w-full p-2 fixed  z-10 bg-white"
+      className="w-full p-2  z-100 bg-gray-300"
       style={{ opacity: opacityNav }}
     >
       <button onClick={BackPage}>
