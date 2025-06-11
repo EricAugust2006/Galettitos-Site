@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useAnimation, scale } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Check,
   ShoppingCart,
@@ -16,6 +16,17 @@ import {
 import { GaletosPattern } from "../../../GlobalComponents/GaletoPattern";
 import { Header } from "./Header";
 import { Card, CardContent } from "../../../GlobalComponents/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../GlobalComponents/Select";
+import { Label } from "../../../GlobalComponents/Label";
+import Input from "../../../GlobalComponents/Input";
+import { TextArea } from "../../../GlobalComponents/Textarea";
+import Inputmask from "inputmask";
 
 interface OrderList {
   id: number;
@@ -37,10 +48,10 @@ interface CustomerInfo {
 }
 
 export default function ReservePage() {
-  // let [numero, setNumero] = useState(0);
-  // const controls = useAnimation();
+  const phoneRef = useRef<HTMLInputElement>(null);
 
-  const [isHovered, setIsHovered] = useState(false);
+  const [isDelivery, setIsDelivery] = useState(false);
+
   const [currentStep, setCurrentStep] = useState(1);
   const [orderItems, setOrderItems] = useState<OrderList[]>([]);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
@@ -52,15 +63,6 @@ export default function ReservePage() {
     paymentMethod: "",
     observations: "",
   });
-
-  // useEffect(() => {
-  //   controls.start({
-  //     scale: [1, 1.15, 1],
-  //     transition: {
-  //       duration: 0.5,
-  //     },
-  //   });
-  // }, [numero]);
 
   const menuItems: OrderList[] = [
     {
@@ -198,7 +200,7 @@ export default function ReservePage() {
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(currentStep - 1);
     }
   };
 
@@ -218,6 +220,7 @@ export default function ReservePage() {
     // implementar logica aqui de enviar o form
     alert("Pedido enviado com sucesso!");
   };
+
   return (
     <>
       <div className="flex min-h-screen flex-col bg-[#F8F3E9] relative">
@@ -392,11 +395,11 @@ export default function ReservePage() {
                     <div className="sticky top-32">
                       <Card className="bg-[#FFF9F0] border-[#E8D8C0] ">
                         <CardContent className="p-6">
-                          <h3 className="text-xl font-bold text-[#8B4513] mb-4">
-                            Seu Pedido
+                          <h3 className="text-xl text-center  font-Inter font-bold text-[#8B4513] mb-4">
+                            SEU <span className="text-[#DAA520]">PEDIDO</span>
                           </h3>
                           {orderItems.length === 0 ? (
-                            <p className="text-xl font-bold text-[#8B4513] mb-4">
+                            <p className="text-md font-semibold text-center text-[#8B4513] mb-4">
                               Nenhum item selecionado
                             </p>
                           ) : (
@@ -502,18 +505,20 @@ export default function ReservePage() {
                   transition={{ duration: 0.5 }}
                   className="max-w-4xl mx-auto"
                 >
-                  <Card className="bg-[#FFF9F0] border-[#E8D8C0]">
-                    <CardContent className="p-8">
-                      <h2 className="text-3xl font-bold text-[#8B4513] mb-8 font-serif text-center">
-                        Suas Informações
-                      </h2>
+                  <Card className="bg-[#FFF9F0]  border-[#E8D8C0]">
+                    <CardContent className="p-8 relative">
+                      <div className="flex justify-center mb-24">
+                        <h2 className="text-3xl font-bold text-[#8B4513] font-serif text-center">
+                          Suas Informações
+                        </h2>
+                      </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                          <label htmlFor="name" className="text-[#3E2723]">
+                          <Label htmlFor="name" className="text-[#3E2723]">
                             Nome Completo
-                          </label>
-                          <input
+                          </Label>
+                          <Input
                             id="name"
                             placeholder="Digite seu nome completo"
                             value={customerInfo.name}
@@ -521,30 +526,44 @@ export default function ReservePage() {
                               handleCustomerInfoChange("name", e.target.value)
                             }
                             type="text"
-                            className="bg-[#F8F3E9] border-[#E8D8C0] focus:border-[#8B4513]"
+                            className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label htmlFor="phone" className="text-galeto-text">
-                            Telefone
-                          </label>
-                          <input
-                            id="phone"
+                          <Label
+                            htmlFor="phone"
+                            className="appearance-none border-[#8B4513] bg-[#F8F3E9] focus:border-[#8B4513] E8D8C0ext-[#3E2723]"
+                          >
+                            Telefone{" "}
+                          </Label>
+                          <Input
+                            ref={phoneRef}
                             placeholder="(00) 00000-0000"
+                            className="border-[#8B4513] focus:border-[#8B4513E8D8C0 bg-[#F8F3E9] appearance-none"
+                            id="phone"
                             value={customerInfo.phone}
+                            onFocus={() => {
+                              if (phoneRef.current) {
+                                Inputmask({
+                                  mask: "(99) 99999-9999",
+                                  placeholder: "_",
+                                  clearIncomplete: true,
+                                }).mask(phoneRef.current);
+                              }
+                            }}
                             onChange={(e) =>
                               handleCustomerInfoChange("phone", e.target.value)
                             }
-                            className="bg-galeto-bg border-galeto-border focus:border-galeto-primary"
+                            // className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label htmlFor="email" className="text-galeto-text">
+                          <label htmlFor="email" className="text-[#3E2723]">
                             E-mail
                           </label>
-                          <input
+                          <Input
                             id="email"
                             type="email"
                             placeholder="seu@email.com"
@@ -552,9 +571,171 @@ export default function ReservePage() {
                             onChange={(e) =>
                               handleCustomerInfoChange("email", e.target.value)
                             }
-                            className="bg-galeto-bg border-galeto-border focus:border-galeto-primary"
+                            className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
                           />
                         </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="Delivery" className="text-[#3E2723]">
+                            É para entrega?{" "}
+                          </Label>
+
+                          <div className="flex gap-4">
+                            <label className="flex items center gap-2">
+                              <input
+                                type="radio"
+                                name="Delivery"
+                                checked={isDelivery === true}
+                                onChange={() => setIsDelivery(true)}
+                              />
+                              Sim
+                            </label>
+                            <label className="flex items-center gap-2">
+                              <input
+                                type="radio"
+                                name="Delivery"
+                                checked={isDelivery === false}
+                                onChange={() => setIsDelivery(false)}
+                              />
+                              Não
+                            </label>
+                          </div>
+                        </div>
+
+                        {isDelivery === true ? (
+                          <div>
+                            <div className="space-y-2 md:col-span-2">
+                              <Label
+                                htmlFor="address"
+                                className="text-[#3E2723]"
+                              >
+                                Endereço de entrega
+                              </Label>
+                              <Input
+                                id="address"
+                                placeholder="Rua, número, bairro, cidade"
+                                value={customerInfo.address}
+                                onChange={(e) =>
+                                  handleCustomerInfoChange(
+                                    "address",
+                                    e.target.value
+                                  )
+                                }
+                                className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        <div className="space-y-2 flex-1 w-full">
+                          <Label
+                            htmlFor="deliveryTime"
+                            className="text-[#3E2723]"
+                          >
+                            Horário de{" "}
+                            {isDelivery === true ? "entrega" : "busca"}
+                          </Label>
+                          <Select
+                            onValueChange={(value) =>
+                              handleCustomerInfoChange("deliveryTime", value)
+                            }
+                          >
+                            <SelectTrigger className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C0]">
+                              <SelectValue placeholder="Selecione o horário" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="08:00">10:30</SelectItem>
+                              <SelectItem value="09:00">11:00</SelectItem>
+                              <SelectItem value="10:00">11:30</SelectItem>
+                              <SelectItem value="11:00">12:00</SelectItem>
+                              <SelectItem value="12:00">12:30</SelectItem>
+                              <SelectItem value="13:00">13:00</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label
+                            htmlFor="paymentMethod"
+                            className="text-[#3E2723]"
+                          >
+                            Forma de pagamento{" "}
+                            <span className="">
+                             {" "} <span className="text-red-900">!</span>{" "}
+                              <span className="text-gray-500 text-xs">
+                                Pagamento somente na loja
+                              </span>
+                              {" "}<span className="text-red-900">!</span>{" "}
+                            </span>
+                          </Label>
+                          <Select
+                            onValueChange={(value) =>
+                              handleCustomerInfoChange("paymentMethod", value)
+                            }
+                          >
+                            <SelectTrigger className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C0]">
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="dinheiro">Dinheiro</SelectItem>
+                              <SelectItem value="cartao">Cartão</SelectItem>
+                              <SelectItem value="pix">PIX</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
+                          <Label
+                            htmlFor="observations"
+                            className="text-[#3E2723]"
+                          >
+                            Observações
+                          </Label>
+
+                          <TextArea
+                            id="observations"
+                            placeholder="Alguma observação especial para seu pedido?"
+                            value={customerInfo.observations}
+                            onChange={(e) =>
+                              handleCustomerInfoChange(
+                                "observations",
+                                e.target.value
+                              )
+                            }
+                            className="bg-[#DAA520]/40 border-[#E8D8C0] focus:border-[#8B4513]"
+                            rows={3}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 mt-8">
+                        <button
+                          className="flex-1 p-2 rounded-xl relative flex items-center justify-center border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513]/30"
+                          onClick={prevStep}
+                        >
+                          <ArrowLeft className="absolute w-4 h-4 left-2" />
+                          Voltar
+                        </button>
+                        <button
+                          className={`flex-1 p-2 rounded-xl relative bg-[#DAA520] flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90 ${
+                            !customerInfo.name ||
+                            !customerInfo.phone ||
+                            (isDelivery === true
+                              ? !customerInfo.address
+                              : customerInfo.address)
+                              ? "bg-gray-400 text-gray-200 cursor-not-allowed hover:bg-gray-400"
+                              : ""
+                          }`}
+                          onClick={nextStep}
+                          disabled={
+                            !customerInfo.name ||
+                            !customerInfo.phone ||
+                            !customerInfo.address
+                          }
+                        >
+                          Continuar
+                          <ArrowRight className="absolute w-4 h-4 right-2" />
+                        </button>
                       </div>
                     </CardContent>
                   </Card>
