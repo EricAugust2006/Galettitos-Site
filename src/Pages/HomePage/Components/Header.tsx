@@ -91,7 +91,7 @@ export const Header = () => {
               </div>
               <button
                 onClick={handleNavigate}
-                className="text-base font-medium active:scale-95 bg-[#8B4513] text-white hover:bg-[#8B4513]/90 px-6 py-2 rounded-full transition-all"
+                className="text-base cursor-pointer font-medium active:scale-95 bg-[#8B4513] text-white hover:bg-[#8B4513]/90 px-6 py-2 rounded-full transition-all"
               >
                 RESERVE JÁ
               </button>

@@ -111,7 +111,7 @@ export function LocationSection() {
                 className="bg-[#DAA520] text-[#5E2612] hover:bg-[#DAA520]/90  sm:w-1/2 p-4 rounded-full group relative overflow-hidden"
               >
                 <a className="" href="https://maps.app.goo.gl/R5zN2QkhEF3RHBfa8" target="_blank" rel="noopener noreferrer">
-                  <span className="relative p-4  z-10">Como Chegar</span>
+                  <span className="relative p-4 font-bold font-serif  z-10">COMO CHEGAR</span>
                   <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
                 </a>
               </button>

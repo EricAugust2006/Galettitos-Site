@@ -34,7 +34,7 @@ export const Footer = () => {
         className="bg-gradient-to-b from-[#5E2612]/20 to-[#5E2612]/30 text-[#3E2723] pt-20 pb-10 relative overflow-hidden"
         id="contact"
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-16">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-16">
           <div className="flex flex-col">
             <img
               src="/GalettitosLogo.png"
@@ -100,13 +100,13 @@ export const Footer = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col">
+          {/* <div className="flex flex-col">
             <h3 className="text-2xl font-bold mb-8 border-b-2 border-[#FFCC00] inline-block pb-2">
               Fale Conosco
             </h3>
 
             <Formulario />
-          </div>
+          </div> */}
         </div>
 
         <div className="text-center mt-8">

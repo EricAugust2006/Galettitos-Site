@@ -27,6 +27,8 @@ import { Label } from "../../../GlobalComponents/Label";
 import Input from "../../../GlobalComponents/Input";
 import { TextArea } from "../../../GlobalComponents/Textarea";
 import Inputmask from "inputmask";
+import { Item } from "@radix-ui/react-select";
+import ModalConfirmation from "./modal/modalConfirmation";
 
 interface OrderList {
   id: number;
@@ -48,6 +50,17 @@ interface CustomerInfo {
 }
 
 export default function ReservePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleConfirmateOrder = () => {
+    setIsModalOpen(true);
+    setMessage("Pedido confirmado com sucesso!");
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   const phoneRef = useRef<HTMLInputElement>(null);
 
   const [isDelivery, setIsDelivery] = useState(false);
@@ -217,15 +230,15 @@ export default function ReservePage() {
       customerInfo,
       total: getTotalPrice(),
     });
-    // implementar logica aqui de enviar o form
-    alert("Pedido enviado com sucesso!");
+    setMessage("Pedido enviado com sucesso!");
+    setIsModalOpen(true);
   };
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-[#F8F3E9] relative">
+      <div className="flex min-h-screen flex-col bg-[#F8F3E9] overflow-hidden relative">
         <main className="flex-1 p-12 bg-gradient-to-b from-[#F8F3E9] to-[#F5DEB3]/30 relative z-10">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="mx-auto px-4">
             <div className="mb-12">
               <div className="flex items-center justify-center space-x-8">
                 {steps.map((step, index) => (
@@ -298,7 +311,7 @@ export default function ReservePage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.1 }}
                         >
-                          <Card className="bg-[#FFF9F0] border-[#E8D8C0] hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                          <Card className="bg-[#FFF9F0] relative border-[#E8D8C0] hover:shadow-lg transition-all duration-300 group">
                             <CardContent className="p-0">
                               <div className="relative">
                                 <img
@@ -309,8 +322,18 @@ export default function ReservePage() {
                                   alt={item.name}
                                   width={400}
                                   height={200}
-                                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                  className="w-full group relative h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                                 />
+
+                                <div
+                                  style={{ zIndex: 1 }}
+                                  className=" bg-[#F5DEB3] border-b border-[#5E2612] rounded-br-lg absolute top-[-6px] px-6 transition-all duration-300 easy-in-out -left-6 transform group-hover:scale-105 bg-[#E8D8C0] transition-opacity duration-300 flex items-center justify-center"
+                                >
+                                  <span className="text-[#8B4513]">
+                                    {item.quantity} {" "}
+                                  </span> &nbsp;
+                                  {" "}Restante
+                                </div>
                               </div>
                               <div className="p-6">
                                 <h3 className="text-xl font-bold text-[#8B4513] mb-2">
@@ -335,7 +358,7 @@ export default function ReservePage() {
                                           onClick={() =>
                                             removeFromOrder(item.id)
                                           }
-                                          className="p-3 md:p-2 bg-[#8B4513] text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
+                                          className="p-3 md:p-2  cursor-pointer bg-[#8B4513] text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
                                         >
                                           {/* //centrailizar */}
                                           <Minus className="text-white w-4 h-4" />
@@ -362,7 +385,7 @@ export default function ReservePage() {
                                             duration: 0.5,
                                           }}
                                           onClick={() => addToOrder(item)}
-                                          className="p-3 md:p-2 bg-[#8B4513] text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
+                                          className="p-3 md:p-2 focus:border-white-900 bg-[#8B4513] cursor-pointer text-[#8B4513] hover:scale-105 hover:bg-[#8B4513] rounded-xl transition-all duration-300 easy-in-out active:scale-90"
                                         >
                                           <Plus className="text-white w-4 h-4" />
                                         </motion.button>
@@ -375,7 +398,7 @@ export default function ReservePage() {
                                         transition={{
                                           duration: 0.5,
                                         }}
-                                        className="bg-[#8B4513]/90 px-4 py-2 rounded-xl hover:bg-[#8B4513]/90 hover:text-white transition-all duration-300 easy-in-out active:scale-95"
+                                        className="bg-[#8B4513]/90 text-[#3E2723] font-semibold font-serif  focus:outline-white cursor-pointer px-4 py-2 rounded-xl hover:bg-[#8B4513]/90 hover:text-white transition-all duration-300 easy-in-out active:scale-95"
                                         onClick={() => addToOrder(item)}
                                       >
                                         Adicionar
@@ -478,7 +501,7 @@ export default function ReservePage() {
                                 transition={{ duration: 0.5 }}
                                 onClick={nextStep}
                                 disabled={orderItems.length === 0}
-                                className="border-b-2 border-l-.5 border-r-.5 w-full bg-[#DAA520] rounded-xl shadow-xl text-[#5E2612] px-4 py-2 hover:bg-[#DAA520]/90 flex justify-between items-center transition-all duration-300 easy-in-out active:scale-95"
+                                className="border-b-2 border-l-.5 cursor-pointer border-r-.5 w-full bg-[#DAA520] rounded-xl shadow-xl text-[#5E2612] px-4 py-2 hover:bg-[#DAA520]/90 flex justify-between items-center transition-all duration-300 easy-in-out active:scale-95"
                               >
                                 Continuar
                                 <div className="flex items-center">
@@ -561,7 +584,7 @@ export default function ReservePage() {
 
                         <div className="space-y-2">
                           <label htmlFor="email" className="text-[#3E2723]">
-                            E-mail
+                            E-mail <span>(Opcional)</span>
                           </label>
                           <Input
                             id="email"
@@ -637,6 +660,7 @@ export default function ReservePage() {
                             {isDelivery === true ? "entrega" : "busca"}
                           </Label>
                           <Select
+                            value={customerInfo.deliveryTime}
                             onValueChange={(value) =>
                               handleCustomerInfoChange("deliveryTime", value)
                             }
@@ -662,14 +686,16 @@ export default function ReservePage() {
                           >
                             Forma de pagamento{" "}
                             <span className="">
-                             {" "} <span className="text-red-900">!</span>{" "}
+                              {" "}
+                              <span className="text-red-900">!</span>{" "}
                               <span className="text-gray-500 text-xs">
                                 Pagamento somente na loja
-                              </span>
-                              {" "}<span className="text-red-900">!</span>{" "}
+                              </span>{" "}
+                              <span className="text-red-900">!</span>{" "}
                             </span>
                           </Label>
                           <Select
+                            value={customerInfo.paymentMethod}
                             onValueChange={(value) =>
                               handleCustomerInfoChange("paymentMethod", value)
                             }
@@ -710,16 +736,17 @@ export default function ReservePage() {
 
                       <div className="flex gap-4 mt-8">
                         <button
-                          className="flex-1 p-2 rounded-xl relative flex items-center justify-center border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513]/30"
+                          className="flex-1 p-2 active:scale-95 rounded-xl relative flex items-center justify-center border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513]/30"
                           onClick={prevStep}
                         >
                           <ArrowLeft className="absolute w-4 h-4 left-2" />
                           Voltar
                         </button>
                         <button
-                          className={`flex-1 p-2 rounded-xl relative bg-[#DAA520] flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90 ${
+                          className={`flex-1 p-2 active:scale-95 rounded-xl relative bg-[#DAA520] flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90 ${
                             !customerInfo.name ||
                             !customerInfo.phone ||
+                            !customerInfo.deliveryTime ||
                             (isDelivery === true
                               ? !customerInfo.address
                               : customerInfo.address)
@@ -730,7 +757,10 @@ export default function ReservePage() {
                           disabled={
                             !customerInfo.name ||
                             !customerInfo.phone ||
-                            !customerInfo.address
+                            !customerInfo.deliveryTime ||
+                            (isDelivery === true
+                              ? !customerInfo.address
+                              : false)
                           }
                         >
                           Continuar
@@ -740,6 +770,145 @@ export default function ReservePage() {
                     </CardContent>
                   </Card>
                 </motion.div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="max-w-4xl mx-auto">
+                  <Card className="bg-[#FFF9F0] border-[#FFF9F0]">
+                    <CardContent className="p-8">
+                      <h2 className="text-3xl font-bold text-[#8B4513] mb-8 font-serif text-center">
+                        CONFIRMAÇÃO DE{" "}
+                        <span className="text-[#DAA520]">PEDIDO</span>
+                        <motion.div
+                          className="bg-[#5E2612] h-[1px]"
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 0.5 }}
+                          exit={{ scaleX: 0 }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </h2>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                          <h3 className="text-xl font-bold text-[#3E2723] mb-4">
+                            Resumo do pedido
+                          </h3>
+                          <div className="space-y-3 mb-6">
+                            {orderItems.map((item) => (
+                              <div
+                                key={item.id}
+                                className="flex justify-between items-center p-3 bg-[#F8F3E9] rounded-lg"
+                              >
+                                <div>
+                                  <p className="font-medium text-[#3E2723]">
+                                    {item.name}
+                                  </p>
+                                  <p className="text-sm text-[#A1887F]">
+                                    {item.quantity}x R${" "}
+                                    {item.price.toFixed(2).replace(".", ",")}
+                                  </p>
+                                </div>
+                                <span className="font-bold text-[#A1887F]">
+                                  R$
+                                  {(item.price * item.quantity)
+                                    .toFixed(2)
+                                    .replace(".", ",")}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="border-t border-[#E8D8C0] pt-4">
+                            <div className="flex justify-between items-center text-xl font-bold text-[#8B4513]">
+                              <span>Total:</span>
+                              <span>
+                                R${" "}
+                                {getTotalPrice().toFixed(2).replace(".", ",")}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h3 className="text-xl font-bold text-[#DAA520] mb-4">
+                            Dados da Entrega
+                          </h3>
+                          <div className="space-y-3">
+                            <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                              <p className="text-sm text-[#A1887F]">Nome</p>
+                              <p className="font-medium text-[#3E2723]">
+                                {customerInfo.name}
+                              </p>
+                            </div>
+                            <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                              <p className="text-sm text-[#A1887F]">Telefone</p>
+                              <p className="font-medium text-[#3E2723]">
+                                {customerInfo.phone}
+                              </p>
+                            </div>
+                            {customerInfo.address && (
+                              <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                                <p className="text-sm text-[#A1887F]">
+                                  Endereço
+                                </p>
+                                <p className="font-medium text-[#3E2723]">
+                                  {customerInfo.address}
+                                </p>
+                              </div>
+                            )}
+                            <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                              <p className="text-sm text-[#A1887F]">Horário</p>
+                              <p className="font-medium text-[#3E2723]">
+                                {customerInfo.deliveryTime}
+                              </p>
+                            </div>
+                            {customerInfo.paymentMethod && (
+                              <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                                <p className="text-sm text-[#A1887F]">
+                                  Pagamento
+                                </p>
+                                <p className="font-medium text-[#3E2723]">
+                                  {customerInfo.paymentMethod.toUpperCase()}
+                                </p>
+                              </div>
+                            )}
+                            {customerInfo.observations && (
+                              <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                                <p className="text-sm text-[#A1887F]">
+                                  Observações
+                                </p>
+                                <p className="font-medium text-[#3E2723]">
+                                  {customerInfo.observations}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 mt-8">
+                        <button
+                          className="flex-1 p-2 rounded-xl hover:bg-[#DAA520] active:scale-95 hover:text-[#5E2612] bg-[#8B4513]/30 relative flex items-center justify-center border-[#8B4513] transition-all duration-300 easy-in-out text-[#8B4513] "
+                          onClick={prevStep}
+                        >
+                          <ArrowLeft className="absolute w-4 h-4 left-2" />
+                          Voltar
+                        </button>
+                        <button
+                          className="flex-1 p-2 rounded-xl relative bg-[#DAA520] active:scale-95 flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90"
+                          onClick={handleSubmitOrder}
+                        >
+                          Confirmar
+                          <CheckCircle className="absolute w-4 h-4 right-2" />
+                        </button>
+                        <ModalConfirmation
+                          isOpen={isModalOpen}
+                          onClose={handleCloseModal}
+                          message={message}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               )}
             </AnimatePresence>
           </div>

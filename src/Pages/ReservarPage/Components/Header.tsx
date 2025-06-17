@@ -10,18 +10,15 @@ export const Header = () => {
     offset: ["start end", "end start"],
   });
 
-  const opacityNav = useTransform(scrollYProgress, [1, .5], [0.5, 1]);
+  const opacityNav = useTransform(scrollYProgress, [1, 0.5], [0.5, 1]);
 
   const BackPage = async () => {
     await Navigate(-1);
   };
 
   return (
-    <motion.nav
-      className="w-full p-2  z-100 bg-gray-300"
-      style={{ opacity: opacityNav }}
-    >
-      <button onClick={BackPage}>
+    <motion.nav className="w-full p-2 text-black z-100 bg-[#F5DEB3]" style={{ opacity: opacityNav }}>
+      <button className="text-black" onClick={BackPage}>
         <BackIcon />
       </button>
     </motion.nav>

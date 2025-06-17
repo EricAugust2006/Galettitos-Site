@@ -144,7 +144,7 @@ export const HeroSection = () => {
               <a href="#Menu" className="text-base flex justify-center items-center font-medium active:scale-95 bg-[#DAA520] text-[#5E2612] hover:bg-white/90 hover:text-black px-4 py-2 text-center rounded-full transition-all group overflow-hidden relative">
                 VER CARDAPIO
               </a>
-              <button onClick={handleNavigate} className="text-base font-medium active:scale-95 border-white text-white bg-[#DAA520] hover:bg-white/90 hover:text-black px-6 py-4 rounded-full transition-all group overflow-hidden relative">
+              <button onClick={handleNavigate} className="cursor-pointer text-base font-medium active:scale-95 border-white text-white bg-[#DAA520] hover:bg-white/90 hover:text-black px-6 py-4 rounded-full transition-all group overflow-hidden relative">
                 FAZER RESERVAS
               </button>
             </div>
