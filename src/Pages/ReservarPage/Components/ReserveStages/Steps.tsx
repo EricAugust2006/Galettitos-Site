@@ -40,10 +40,16 @@ interface CustomerInfo {
   name: string;
   phone: string;
   email: string;
-  address: string;
   deliveryTime: string;
   paymentMethod: string;
   observations: string;
+  address: {
+    street: string;
+    number: string;
+    complement: string;
+    neighborhood: string;
+  };
+
 }
 
 export default function Steps() {
@@ -68,10 +74,15 @@ export default function Steps() {
     name: "",
     phone: "",
     email: "",
-    address: "",
     deliveryTime: "",
     paymentMethod: "",
     observations: "",
+    address: {
+      street: "",
+      number: "",
+      complement: "",
+      neighborhood: "",
+    },
   });
 
   const menuItems: OrderList[] = [
@@ -216,9 +227,14 @@ export default function Steps() {
 
   const handleCustomerInfoChange = (
     field: keyof CustomerInfo,
-    value: string
+    value: any
   ) => {
-    setCustomerInfo((prev) => ({ ...prev, [field]: value }));
+    if (field === "address") {
+      setCustomerInfo((prev) => ({ ...prev, address: { ...prev.address, ...value } }));
+    } else {
+      setCustomerInfo((prev) => ({ ...prev, [field]: value }));
+
+    }
   };
 
   const handleSubmitOrder = () => {
@@ -511,7 +527,7 @@ export default function Steps() {
                     onChange={(e) =>
                       handleCustomerInfoChange("phone", e.target.value)
                     }
-                    // className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
+                  // className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
                   />
                 </div>
 
@@ -558,18 +574,46 @@ export default function Steps() {
                   </div>
                 </div>
 
+                 {isDelivery === true ? (
+                  <div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="neighborhood" className="text-[#3E2723]">
+                        Bairro
+                      </Label>
+                      <Input
+                        id="neighborhood"
+                        placeholder="Bairro"
+                        value={customerInfo.address.neighborhood}
+                        onChange={(e) =>
+                          handleCustomerInfoChange("address", {
+                            ...customerInfo.address,
+                            neighborhood: e.target.value,
+                          })
+                        }
+                        className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
+                      />
+                    </div>
+                  </div>
+                ) :
+                  (
+                    <></>
+                  )}
+
                 {isDelivery === true ? (
                   <div>
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="address" className="text-[#3E2723]">
-                        Endereço de entrega
+                      <Label htmlFor="street" className="text-[#3E2723]">
+                        Rua
                       </Label>
                       <Input
-                        id="address"
-                        placeholder="Rua, número, bairro, cidade"
-                        value={customerInfo.address}
+                        id="street"
+                        placeholder="Rua"
+                        value={customerInfo.address.street}
                         onChange={(e) =>
-                          handleCustomerInfoChange("address", e.target.value)
+                          handleCustomerInfoChange("address", {
+                            ...customerInfo.address,
+                            street: e.target.value,
+                          })
                         }
                         className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
                       />
@@ -578,6 +622,59 @@ export default function Steps() {
                 ) : (
                   <></>
                 )}
+
+                {/* //NUMBER/NUMERO */}
+                {isDelivery === true ? (<>
+                  <div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="number" className="text-[#3E2723]">
+                        Número
+                      </Label>
+                      <Input
+                        id="number"
+                        placeholder="Número"
+                        value={customerInfo.address.number}
+                        onChange={(e) =>
+                          handleCustomerInfoChange("address", {
+                            ...customerInfo.address,
+                            number: e.target.value,
+                          })
+                        }
+                        className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
+                      />
+                    </div>
+                  </div>
+                </>) :
+                  (
+                    <></>
+                  )}
+
+                {isDelivery === true ? (
+                  <div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label htmlFor="complement" className="text-[#3E2723]">
+                        Complemento
+                      </Label>
+                      <Input
+                        id="complement"
+                        placeholder="Complemento"
+                        value={customerInfo.address.complement}
+                        onChange={(e) =>
+                          handleCustomerInfoChange("address", {
+                            ...customerInfo.address,
+                            complement: e.target.value,
+                          })
+                        }
+                        className="bg-[#F8F3E9] border-[#8B4513] focus:border-[#E8D8C03]"
+                      />
+                    </div>
+                  </div>
+                ) :
+                  (
+                    <></>
+                  )}
+
+
                 <div className="space-y-2 flex-1 w-full">
                   <Label htmlFor="deliveryTime" className="text-[#3E2723]">
                     Horário de {isDelivery === true ? "entrega" : "busca"}
@@ -657,22 +754,31 @@ export default function Steps() {
                   Voltar
                 </button>
                 <button
-                  className={`flex-1 p-2 active:scale-95 rounded-xl relative bg-[#DAA520] flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90 ${
-                    !customerInfo.name ||
+                  className={`flex-1 p-2 active:scale-95 rounded-xl relative bg-[#DAA520] flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90 ${!customerInfo.name ||
                     !customerInfo.phone ||
                     !customerInfo.deliveryTime ||
-                    (isDelivery === true
-                      ? !customerInfo.address
-                      : customerInfo.address)
-                      ? "bg-gray-400 text-gray-200 cursor-not-allowed hover:bg-gray-400"
-                      : ""
-                  }`}
+                    !customerInfo.paymentMethod ||
+                    (isDelivery === true && (
+                      !customerInfo.address.street ||
+                      !customerInfo.address.number ||
+                      !customerInfo.address.neighborhood ||
+                      !customerInfo.address.complement
+                    ))
+                    ? "bg-gray-400 text-gray-200 cursor-not-allowed hover:bg-gray-400"
+                    : ""
+                    }`}
                   onClick={nextStep}
                   disabled={
                     !customerInfo.name ||
                     !customerInfo.phone ||
                     !customerInfo.deliveryTime ||
-                    (isDelivery === true ? !customerInfo.address : false)
+                    !customerInfo.paymentMethod ||
+                    (isDelivery === true && (
+                      !customerInfo.address.street ||
+                      !customerInfo.address.number ||
+                      !customerInfo.address.neighborhood
+                      // !customerInfo.address.complement
+                    ))
                   }
                 >
                   Continuar
@@ -682,138 +788,143 @@ export default function Steps() {
             </CardContent>
           </Card>
         </motion.div>
-      )}
+      )
+      }
 
-      {currentStep === 3 && (
-        <div className="max-w-4xl mx-auto">
-          <Card className="bg-[#FFF9F0] border-[#FFF9F0]">
-            <CardContent className="p-8">
-              <h2 className="text-3xl font-bold text-[#8B4513] mb-8 font-serif text-center">
-                CONFIRMAÇÃO DE <span className="text-[#DAA520]">PEDIDO</span>
-                <motion.div
-                  className="bg-[#5E2612] h-[1px]"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 0.5 }}
-                  exit={{ scaleX: 0 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </h2>
+      {
+        currentStep === 3 && (
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-[#FFF9F0] border-[#FFF9F0]">
+              <CardContent className="p-8">
+                <h2 className="text-3xl font-bold text-[#8B4513] mb-8 font-serif text-center">
+                  CONFIRMAÇÃO DE <span className="text-[#DAA520]">PEDIDO</span>
+                  <motion.div
+                    className="bg-[#5E2612] h-[1px]"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 0.5 }}
+                    exit={{ scaleX: 0 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </h2>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold text-[#3E2723] mb-4">
-                    Resumo do pedido
-                  </h3>
-                  <div className="space-y-3 mb-6">
-                    {orderItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between items-center p-3 bg-[#F8F3E9] rounded-lg"
-                      >
-                        <div>
-                          <p className="font-medium text-[#3E2723]">
-                            {item.name}
-                          </p>
-                          <p className="text-sm text-[#A1887F]">
-                            {item.quantity}x R${" "}
-                            {item.price.toFixed(2).replace(".", ",")}
-                          </p>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#3E2723] mb-4">
+                      Resumo do pedido
+                    </h3>
+                    <div className="space-y-3 mb-6">
+                      {orderItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="flex justify-between items-center p-3 bg-[#F8F3E9] rounded-lg"
+                        >
+                          <div>
+                            <p className="font-medium text-[#3E2723]">
+                              {item.name}
+                            </p>
+                            <p className="text-sm text-[#A1887F]">
+                              {item.quantity}x R${" "}
+                              {item.price.toFixed(2).replace(".", ",")}
+                            </p>
+                          </div>
+                          <span className="font-bold text-[#A1887F]">
+                            R$
+                            {(item.price * item.quantity)
+                              .toFixed(2)
+                              .replace(".", ",")}
+                          </span>
                         </div>
-                        <span className="font-bold text-[#A1887F]">
-                          R$
-                          {(item.price * item.quantity)
-                            .toFixed(2)
-                            .replace(".", ",")}
+                      ))}
+                    </div>
+                    <div className="border-t border-[#E8D8C0] pt-4">
+                      <div className="flex justify-between items-center text-xl font-bold text-[#8B4513]">
+                        <span>Total:</span>
+                        <span>
+                          R$ {getTotalPrice().toFixed(2).replace(".", ",")}
                         </span>
                       </div>
-                    ))}
+                    </div>
                   </div>
-                  <div className="border-t border-[#E8D8C0] pt-4">
-                    <div className="flex justify-between items-center text-xl font-bold text-[#8B4513]">
-                      <span>Total:</span>
-                      <span>
-                        R$ {getTotalPrice().toFixed(2).replace(".", ",")}
-                      </span>
+
+                  <div>
+                    <h3 className="text-xl font-bold text-[#DAA520] mb-4">
+                      Dados da Entrega
+                    </h3>
+                    <div className="space-y-3">
+                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                        <p className="text-sm text-[#A1887F]">Nome</p>
+                        <p className="font-medium text-[#3E2723]">
+                          {customerInfo.name}
+                        </p>
+                      </div>
+                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                        <p className="text-sm text-[#A1887F]">Telefone</p>
+                        <p className="font-medium text-[#3E2723]">
+                          {customerInfo.phone}
+                        </p>
+                      </div>
+                      {customerInfo.address && (
+                        <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                          <p className="text-sm text-[#A1887F]">Endereço</p>
+                          <p className="font-medium text-[#3E2723]">
+                            {customerInfo.address.street} - {customerInfo.address.number}, {customerInfo.address.neighborhood}
+                          </p>
+                        </div>
+                      )}
+
+
+                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                        <p className="text-sm text-[#A1887F]">Horário</p>
+                        <p className="font-medium text-[#3E2723]">
+                          {customerInfo.deliveryTime}
+                        </p>
+                      </div>
+                      {customerInfo.paymentMethod && (
+                        <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                          <p className="text-sm text-[#A1887F]">Pagamento</p>
+                          <p className="font-medium text-[#3E2723]">
+                            {customerInfo.paymentMethod.toUpperCase()}
+                          </p>
+                        </div>
+                      )}
+                      {customerInfo.observations && (
+                        <div className="p-3 bg-[#F8F3E9] rounded-lg">
+                          <p className="text-sm text-[#A1887F]">Observações</p>
+                          <p className="font-medium text-[#3E2723]">
+                            {customerInfo.observations}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-bold text-[#DAA520] mb-4">
-                    Dados da Entrega
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                      <p className="text-sm text-[#A1887F]">Nome</p>
-                      <p className="font-medium text-[#3E2723]">
-                        {customerInfo.name}
-                      </p>
-                    </div>
-                    <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                      <p className="text-sm text-[#A1887F]">Telefone</p>
-                      <p className="font-medium text-[#3E2723]">
-                        {customerInfo.phone}
-                      </p>
-                    </div>
-                    {customerInfo.address && (
-                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                        <p className="text-sm text-[#A1887F]">Endereço</p>
-                        <p className="font-medium text-[#3E2723]">
-                          {customerInfo.address}
-                        </p>
-                      </div>
-                    )}
-                    <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                      <p className="text-sm text-[#A1887F]">Horário</p>
-                      <p className="font-medium text-[#3E2723]">
-                        {customerInfo.deliveryTime}
-                      </p>
-                    </div>
-                    {customerInfo.paymentMethod && (
-                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                        <p className="text-sm text-[#A1887F]">Pagamento</p>
-                        <p className="font-medium text-[#3E2723]">
-                          {customerInfo.paymentMethod.toUpperCase()}
-                        </p>
-                      </div>
-                    )}
-                    {customerInfo.observations && (
-                      <div className="p-3 bg-[#F8F3E9] rounded-lg">
-                        <p className="text-sm text-[#A1887F]">Observações</p>
-                        <p className="font-medium text-[#3E2723]">
-                          {customerInfo.observations}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                <div className="flex gap-4 mt-8">
+                  <button
+                    className="flex-1 p-2 rounded-xl hover:bg-[#DAA520] active:scale-95 hover:text-[#5E2612] bg-[#8B4513]/30 relative flex items-center justify-center border-[#8B4513] transition-all duration-300 easy-in-out text-[#8B4513] "
+                    onClick={prevStep}
+                  >
+                    <ArrowLeft className="absolute w-4 h-4 left-2" />
+                    Voltar
+                  </button>
+                  <button
+                    className="flex-1 p-2 rounded-xl relative bg-[#DAA520] active:scale-95 flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90"
+                    onClick={handleSubmitOrder}
+                  >
+                    Confirmar
+                    <CheckCircle className="absolute w-4 h-4 right-2" />
+                  </button>
+                  <ModalConfirmation
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    message={message}
+                  />
                 </div>
-              </div>
-
-              <div className="flex gap-4 mt-8">
-                <button
-                  className="flex-1 p-2 rounded-xl hover:bg-[#DAA520] active:scale-95 hover:text-[#5E2612] bg-[#8B4513]/30 relative flex items-center justify-center border-[#8B4513] transition-all duration-300 easy-in-out text-[#8B4513] "
-                  onClick={prevStep}
-                >
-                  <ArrowLeft className="absolute w-4 h-4 left-2" />
-                  Voltar
-                </button>
-                <button
-                  className="flex-1 p-2 rounded-xl relative bg-[#DAA520] active:scale-95 flex justify-center items-center text-[#5E2612] hover:bg-[#DAA520]/90"
-                  onClick={handleSubmitOrder}
-                >
-                  Confirmar
-                  <CheckCircle className="absolute w-4 h-4 right-2" />
-                </button>
-                <ModalConfirmation
-                  isOpen={isModalOpen}
-                  onClose={handleCloseModal}
-                  message={message}
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-    </AnimatePresence>
+              </CardContent>
+            </Card>
+          </div>
+        )
+      }
+    </AnimatePresence >
   );
 }
